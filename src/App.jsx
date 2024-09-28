@@ -41,7 +41,6 @@ function App() {
 
 	return (
 		<>
-			<h1 className="text-3xl font-bold underline">Interview.io</h1>
 			<div>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta velit
