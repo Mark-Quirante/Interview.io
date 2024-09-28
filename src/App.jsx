@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./Navbar";
 import Job from "./Job";
+import InterviewPrep from "./InterviewPrep";
 
 function App() {
 	const [haiku, setHaiku] = useState("");
@@ -49,6 +50,7 @@ function App() {
 			<div>
 				<Routes>
 					<Route path="/" element={<Job />} />
+					<Route path="/InterviewPrep" element={<InterviewPrep />} />
 				</Routes>
 			</div>
 		</Router>
