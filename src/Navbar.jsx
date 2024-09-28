@@ -1,6 +1,6 @@
 function Navbar() {
 	return (
-		<nav>
+		<nav className="bg-green-500">
 			<img></img>
 			<p>Land that job!</p>
 			<p>About Us</p>

@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import OpenAI from "openai";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./Navbar";
+import Job from "./Job";
+
 function App() {
 	const [haiku, setHaiku] = useState("");
 
@@ -40,41 +44,14 @@ function App() {
 	}, []); // Empty array ensures this runs only once when the component mounts
 
 	return (
-		<>
+		<Router>
+			<Navbar />
 			<div>
-				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta velit
-					nobis repellat qui voluptatum error fuga illum non corporis esse
-					numquam dolorum ut, sapiente provident cumque veritatis optio quis
-					nulla.
-				</p>
+				<Routes>
+					<Route path="/" element={<Job />} />
+				</Routes>
 			</div>
-			<div>
-				<table>
-					<tr>
-						<thead>Tell me</thead>
-					</tr>
-					<tr>
-						<td>Job Title:</td>
-						<td>
-							<input></input>
-						</td>
-					</tr>
-					<tr>
-						<td>Company Name:</td>
-						<td>
-							<input></input>
-						</td>
-					</tr>
-					<tr>
-						<td>Job Description:</td>
-						<td>
-							<input></input>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</>
+		</Router>
 	);
 }
 
