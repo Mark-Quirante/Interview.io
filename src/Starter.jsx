@@ -4,13 +4,13 @@ import { JobContext } from "./JobContext";
 
 function Starter() {
 	const openai = useContext(OpenAIContext); // Access OpenAI context
-	const { jobTitle } = useContext(JobContext); // Access jobTitle from JobContext
+	const { companyName } = useContext(JobContext); // Access jobTitle from JobContext
 	const [responseText, setResponseText] = useState(""); // State to hold the API response
 
 	// useEffect to handle the API call when the component mounts or when jobTitle changes
 	useEffect(() => {
 		const fetchOpenAIResponse = async () => {
-			if (jobTitle) {
+			if (companyName) {
 				// Ensure jobTitle is available
 				try {
 					const response = await openai.chat.completions.create({
@@ -22,7 +22,7 @@ function Starter() {
 							},
 							{
 								role: "user",
-								content: `Tell me about the job titled "${jobTitle}".`,
+								content: `Tell me about the company titled "${companyName}".`,
 							},
 						],
 						max_tokens: 150, // Adjust token limit as necessary
@@ -30,7 +30,7 @@ function Starter() {
 					});
 
 					// Set the API response text to state
-					setResponseText(response.data.choices[0].message.content);
+					setResponseText(response.choices[0].message.content);
 				} catch (error) {
 					console.error("Error fetching from OpenAI API:", error);
 				}
@@ -38,12 +38,12 @@ function Starter() {
 		};
 
 		fetchOpenAIResponse();
-	}, [jobTitle, openai]); // Dependency array includes jobTitle and openai
+	}, [companyName, openai]); // Dependency array includes jobTitle and openai
 
 	return (
 		<div className="container">
 			<h1>Welcome to your Mock Interview!</h1>
-			<h2>Let me tell you something about the job titled + {jobTitle}</h2>
+			<h2>Let me tell you something about the company titled + {companyName}</h2>
 			<p>{responseText ? responseText : "Loading job details..."}</p>
 			<p>Ready to start the interview?</p>
 			<button type="submit">Start</button>
