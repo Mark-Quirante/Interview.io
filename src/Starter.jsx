@@ -1,11 +1,50 @@
-import React from "react";
+import { useContext, useEffect, useState } from "react";
+import { OpenAIContext } from "./OpenAIContext";
+import { JobContext } from "./JobContext";
 
 export default function Starter() {
+	const openai = useContext(OpenAIContext); // Access OpenAI context
+	const { jobTitle } = useContext(JobContext); // Access jobTitle from JobContext
+	const [responseText, setResponseText] = useState(""); // State to hold the API response
+
+	// useEffect to handle the API call when the component mounts or when jobTitle changes
+	useEffect(() => {
+		const fetchOpenAIResponse = async () => {
+			if (jobTitle) {
+				// Ensure jobTitle is available
+				try {
+					const response = await openai.createChatCompletion({
+						model: "gpt-4", // Specify the model
+						messages: [
+							{
+								role: "system",
+								content: "You are a helpful assistant for mock interviews.",
+							},
+							{
+								role: "user",
+								content: `Tell me about the job titled "${jobTitle}".`,
+							},
+						],
+						max_tokens: 150, // Adjust token limit as necessary
+						temperature: 0.7,
+					});
+
+					// Set the API response text to state
+					setResponseText(response.data.choices[0].message.content);
+				} catch (error) {
+					console.error("Error fetching from OpenAI API:", error);
+				}
+			}
+		};
+
+		fetchOpenAIResponse();
+	}, [jobTitle, openai]); // Dependency array includes jobTitle and openai
+
 	return (
-		<div classname="container">
+		<div className="container">
 			<h1>Welcome to your Mock Interview!</h1>
-			<h2>Let me tell you something about the company</h2>
-			<p>Company Description</p>
+			<h2>Let me tell you something about the job titled "{jobTitle}"</h2>
+			<p>{responseText ? responseText : "Loading job details..."}</p>
 			<p>Ready to start the interview?</p>
 			<button type="submit">Start</button>
 			<p>Please enable microphone functionality for best results!</p>

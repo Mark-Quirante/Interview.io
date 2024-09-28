@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { JobContext } from "./JobContext";
+
 function Job() {
-	const [jobTitle, setJobTitle] = useState("");
-	const [companyName, setCompanyName] = useState("");
-	const [jobDescription, setJobDescription] = useState("");
+	const {
+		jobTitle,
+		setJobTitle,
+		companyName,
+		setCompanyName,
+		jobDescription,
+		setJobDescription,
+	} = useContext(JobContext);
 
 	return (
 		<div>
