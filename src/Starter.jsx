@@ -1,11 +1,6 @@
 import React from "react";
-import 
 
 export default function Starter() {
-
-
-
-
 	return (
 		<div classname="container">
 			<h1>Welcome to your Mock Interview!</h1>
