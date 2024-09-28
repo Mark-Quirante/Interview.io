@@ -1,4 +1,9 @@
+import { useState } from "react";
 function Job() {
+	const [jobTitle, setJobTitle] = useState("");
+	const [companyName, setCompanyName] = useState("");
+	const [jobDescription, setJobDescription] = useState("");
+
 	return (
 		<div>
 			<div>
@@ -17,19 +22,31 @@ function Job() {
 					<tr>
 						<td>Job Title:</td>
 						<td>
-							<input className="bg-green-500"></input>
+							<input
+								className="bg-green-500"
+								value={jobTitle}
+								onChange={(e) => setJobTitle(e.target.value)}
+							></input>
 						</td>
 					</tr>
 					<tr>
 						<td>Company Name:</td>
 						<td>
-							<input className="bg-green-500"></input>
+							<input
+								className="bg-green-500"
+								value={companyName}
+								onChange={(e) => setCompanyName(e.target.value)}
+							></input>
 						</td>
 					</tr>
 					<tr>
 						<td>Job Description:</td>
 						<td>
-							<input className="bg-green-500"></input>
+							<input
+								className="bg-green-500"
+								value={jobDescription}
+								onChange={(e) => setJobDescription(e.target.value)}
+							></input>
 						</td>
 					</tr>
 				</table>
