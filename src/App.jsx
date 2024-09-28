@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import OpenAI from "openai";
 function App() {
-	const [count, setCount] = useState(0);
 	const [haiku, setHaiku] = useState("");
 
 	// Simulating your OpenAI call inside useEffect for when the component mounts
@@ -75,9 +74,6 @@ function App() {
 						</td>
 					</tr>
 				</table>
-			</div>
-			<div>
-				<button onClick={() => setCount}>Start</button>
 			</div>
 		</>
 	);
