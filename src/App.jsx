@@ -1,8 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-
+import OpenAI from "openai";
 function App() {
 	const [count, setCount] = useState(0);
+	const [haiku, setHaiku] = useState("");
+
+	// Simulating your OpenAI call inside useEffect for when the component mounts
+	useEffect(() => {
+		const fetchHaiku = async () => {
+			try {
+				const openai = new OpenAI({
+					organization: "org-W7tvaOCfRNIIKnZuD6tsObLp",
+					project: "proj_YxiK587sqM1kOM61QK0X46uO",
+					apiKey: import.meta.env.VITE_API_KEY,
+					dangerouslyAllowBrowser: true,
+				});
+
+				const completion = await openai.chat.completions.create({
+					model: "gpt-4o",
+					messages: [
+						{
+							role: "system",
+							content: "You are acting as an interviewer at a company",
+						},
+						{
+							role: "user",
+							content: "Do you have any questions for me?",
+						},
+					],
+				});
+
+				setHaiku(console.log(completion.choices[0].message)); // Assuming you get the response content here
+			} catch (error) {
+				console.error("Error fetching haiku: ", error);
+			}
+		};
+
+		fetchHaiku(); // Call the async function
+	}, []); // Empty array ensures this runs only once when the component mounts
 
 	return (
 		<>
