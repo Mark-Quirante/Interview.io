@@ -38,13 +38,15 @@ function Starter() {
 		};
 
 		fetchOpenAIResponse();
-	}, [companyName, openai]); // Dependency array includes jobTitle and openai
+	}, [companyName, openai]); // Dependency array includes companyName and openai
 
 	return (
 		<div className="container">
 			<h1>Welcome to your Mock Interview!</h1>
-			<h2>Let me tell you something about the company titled + {companyName}</h2>
-			<p>{responseText ? responseText : "Loading job details..."}</p>
+			<h2>
+				Let me tell you something about the company titled + {companyName}
+			</h2>
+			<p>{responseText ? responseText : "Loading company details..."}</p>
 			<p>Ready to start the interview?</p>
 			<button type="submit">Start</button>
 			<p>Please enable microphone functionality for best results!</p>
