@@ -1,14 +1,26 @@
 import { useContext, useEffect } from "react";
 import { MicRecorderContext } from "../provider/MicRecorderProvider";
+import { OpenAIContext } from "../OpenAIContext";
 
 function SpeechToText() {
   const { isRecording, recordedBlob, mediaURL, beginRecording, stopRecording } = useContext(MicRecorderContext);
+  const openai = useContext(OpenAIContext);
   
   useEffect(() => {
     if (recordedBlob?.stream) {
-      console.log('Pls work', recordedBlob.stream());
+      getAiTranscription();
     }
   }, [recordedBlob]);
+
+  const getAiTranscription = async () => {
+    console.log("File", await recordedBlob.stream());
+    const transcription = await openai.audio.transcriptions.create({
+      file: new File([recordedBlob], "recording.mp3", { type: "audio/mp3"}),
+      model: "whisper-1",
+    });
+
+    console.log('transcription', transcription);
+  };
 
 
   return (
