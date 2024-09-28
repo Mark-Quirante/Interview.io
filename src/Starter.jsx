@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { OpenAIContext } from "./OpenAIContext";
 import { JobContext } from "./JobContext";
 
-export default function Starter() {
+function Starter() {
 	const openai = useContext(OpenAIContext); // Access OpenAI context
 	const { jobTitle } = useContext(JobContext); // Access jobTitle from JobContext
 	const [responseText, setResponseText] = useState(""); // State to hold the API response
@@ -13,8 +13,8 @@ export default function Starter() {
 			if (jobTitle) {
 				// Ensure jobTitle is available
 				try {
-					const response = await openai.createChatCompletion({
-						model: "gpt-4", // Specify the model
+					const response = await openai.chat.completions.create({
+						model: "gpt-4o", // Specify the model
 						messages: [
 							{
 								role: "system",
@@ -43,7 +43,7 @@ export default function Starter() {
 	return (
 		<div className="container">
 			<h1>Welcome to your Mock Interview!</h1>
-			<h2>Let me tell you something about the job titled "{jobTitle}"</h2>
+			<h2>Let me tell you something about the job titled + {jobTitle}</h2>
 			<p>{responseText ? responseText : "Loading job details..."}</p>
 			<p>Ready to start the interview?</p>
 			<button type="submit">Start</button>
@@ -51,3 +51,5 @@ export default function Starter() {
 		</div>
 	);
 }
+
+export default Starter;

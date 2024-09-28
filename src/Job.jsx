@@ -1,5 +1,14 @@
 import { useContext } from "react";
 import { JobContext } from "./JobContext";
+import { Link } from "react-router-dom";
+
+function ButtonLink({ to, children }) {
+	return (
+		<Link to={to}>
+			<button>{children}</button>
+		</Link>
+	);
+}
 
 function Job() {
 	const {
@@ -58,6 +67,7 @@ function Job() {
 					</tr>
 				</table>
 			</div>
+			<ButtonLink to="/Starter">Enter</ButtonLink>
 		</div>
 	);
 }
