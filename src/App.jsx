@@ -21,7 +21,8 @@ function App() {
 					messages: [
 						{
 							role: "system",
-							content: "You are acting as an interviewer at a company",
+							content:
+								"You are a helpful assistant that generates interview questions",
 						},
 						{
 							role: "user",
