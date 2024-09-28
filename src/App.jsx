@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import OpenAI from "openai";
+import MicRecorderProvider from "./provider/MicRecorderProvider";
+import SpeechToText from "./components/SpeechToText";
 function App() {
 	const [haiku, setHaiku] = useState("");
 
@@ -41,39 +43,42 @@ function App() {
 
 	return (
 		<>
-			<div>
-				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta velit
-					nobis repellat qui voluptatum error fuga illum non corporis esse
-					numquam dolorum ut, sapiente provident cumque veritatis optio quis
-					nulla.
-				</p>
-			</div>
-			<div>
-				<table>
-					<tr>
-						<thead>Tell me</thead>
-					</tr>
-					<tr>
-						<td>Job Title:</td>
-						<td>
-							<input></input>
-						</td>
-					</tr>
-					<tr>
-						<td>Company Name:</td>
-						<td>
-							<input></input>
-						</td>
-					</tr>
-					<tr>
-						<td>Job Description:</td>
-						<td>
-							<input></input>
-						</td>
-					</tr>
-				</table>
-			</div>
+			<MicRecorderProvider>
+				<SpeechToText />
+				<div>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta velit
+						nobis repellat qui voluptatum error fuga illum non corporis esse
+						numquam dolorum ut, sapiente provident cumque veritatis optio quis
+						nulla.
+					</p>
+				</div>
+				<div>
+					<table>
+						<tr>
+							<thead>Tell me</thead>
+						</tr>
+						<tr>
+							<td>Job Title:</td>
+							<td>
+								<input></input>
+							</td>
+						</tr>
+						<tr>
+							<td>Company Name:</td>
+							<td>
+								<input></input>
+							</td>
+						</tr>
+						<tr>
+							<td>Job Description:</td>
+							<td>
+								<input></input>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</MicRecorderProvider>
 		</>
 	);
 }
