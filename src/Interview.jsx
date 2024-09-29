@@ -3,6 +3,7 @@ import { OpenAIContext } from "./OpenAIContext";
 import { JobContext } from "./JobContext";
 import SpeechToText from "../src/components/SpeechToText";
 import { Link } from "react-router-dom";
+import { MicRecorderContext } from "./provider/MicRecorderProvider";
 
 function ButtonLink({ to, children }) {
 	return (
@@ -15,6 +16,8 @@ function ButtonLink({ to, children }) {
 function Interview() {
 	const openai = useContext(OpenAIContext);
 	const { jobTitle, companyName, jobDescription } = useContext(JobContext);
+	const { clearObjects } = useContext(MicRecorderContext);
+
 	console.log(jobTitle);
 
 	const [questions, setQuestions] = useState([]);
@@ -72,6 +75,7 @@ function Interview() {
 
 	// Handler for moving to the next question
 	const nextQuestion = () => {
+		clearObjects();
 		if (currentQuestionIndex < 4) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		}
