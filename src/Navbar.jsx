@@ -1,24 +1,22 @@
-import video from "./assets/Interview.io.png";
 import { Link } from "react-router-dom";
+import logo from "./assets/logo.png";
+import "./styles/Navbar.css";
 
 function ButtonLink({ to, children }) {
 	return (
 		<Link to={to}>
-			<button>{children}</button>
+			<button className="text-light-green">{children}</button>
 		</Link>
 	);
 }
 
 function Navbar() {
 	return (
-		<nav className="bg-green-500 p-5 flex justify-between items-center">
-			<img
-				src={video}
-				alt="Interview.io Logo"
-				style={{ width: "200px", height: "200px", borderRadius: "50%" }}
-			></img>
+		<nav className="w-full p-5 flex justify-between items-center">
+			<Link to="/">
+				<img id="logo" src={logo} alt="Interview.io Logo"></img>
+			</Link>
 			<ul>
-				<li>Land that job!</li>
 				<li>
 					<ButtonLink to="/About">About</ButtonLink>
 				</li>

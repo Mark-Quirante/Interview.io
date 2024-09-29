@@ -1,15 +1,16 @@
 import { useContext, useState, useEffect } from "react";
 import { OpenAIContext } from "./OpenAIContext";
 import { JobContext } from "./JobContext";
-import SpeechToText from "../src/components/SpeechToText";
 import { Link } from "react-router-dom";
-import { MicRecorderContext } from "./provider/MicRecorderProvider";
+import Card from "./components/Card";
+import Button from "./components/Button";
+import AnswerBox from "./components/AnswerBox";
 import { InterviewAnswersContext } from "./InterviewAnswersContext";
 
 function ButtonLink({ to, children }) {
 	return (
-		<Link to={to}>
-			<button>{children}</button>
+		<Link className="mt-5" to={to}>
+			<button className="font-bold text-lg text-light-green">{children}</button>
 		</Link>
 	);
 }
@@ -17,7 +18,6 @@ function ButtonLink({ to, children }) {
 function Interview() {
 	const openai = useContext(OpenAIContext);
 	const { jobTitle, companyName, jobDescription } = useContext(JobContext);
-	const { clearObjects } = useContext(MicRecorderContext);
 
 	const { interviewData, setInterviewData } = useContext(
 		InterviewAnswersContext
@@ -82,51 +82,31 @@ function Interview() {
 	};
 
 	const nextQuestion = () => {
-		clearObjects();
 		if (currentQuestionIndex < 4) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		}
 	};
 
 	return (
-		<div>
-			<h1>Interview</h1>
+		<div className="flex flex-col flex-1 items-center">
 			{interviewData[currentQuestionIndex] && (
-				<div key={currentQuestionIndex} style={{ marginBottom: "20px" }}>
-					<h2>
-						Question {currentQuestionIndex + 1}:{" "}
-						{interviewData[currentQuestionIndex].question}
-					</h2>
-					{interviewData[currentQuestionIndex].answer ? (
-						<p>Your Answer: {interviewData[currentQuestionIndex].answer}</p>
-					) : (
-						<SpeechToText
-							setAnswer={handleAnswer}
-							questionNumber={currentQuestionIndex + 1}
-						/>
-					)}
+				<div className="flex flex-col items-center flex-1" key={currentQuestionIndex}>
+					<div className="text-white text-center mb-5">
+						<h1>
+							Question {currentQuestionIndex + 1}
+						</h1>
+						<p>out of 5</p>
+					</div>
+					<Card className="flex flex-col items-center flex-1">
+						<p className="text-center font-bold text-xl">{interviewData[currentQuestionIndex].question}</p>
+						<AnswerBox setAnswer={handleAnswer} answer={interviewData[currentQuestionIndex].answer}/>
+						{currentQuestionIndex < 4 && interviewData.length > currentQuestionIndex && (
+							<Button className="w-full" onClick={nextQuestion}>Next Question</Button>
+						)}
+					</Card>
 				</div>
 			)}
-			{currentQuestionIndex < 4 &&
-				interviewData.length > currentQuestionIndex && (
-					<button onClick={nextQuestion}>Next Question</button>
-				)}
-			{currentQuestionIndex === 4 && (
-				<div>
-					<h2>Summary of Answers:</h2>
-					{interviewData.map((item, index) => (
-						<div key={index}>
-							<p>
-								Question {index + 1}: {item.question}
-							</p>
-							<p>
-								Answer {index + 1}: {item.answer}
-							</p>
-						</div>
-					))}
-				</div>
-			)}
-			<ButtonLink to="/Results">Results</ButtonLink>
+			<ButtonLink to="/Results">End Interview</ButtonLink>
 		</div>
 	);
 }

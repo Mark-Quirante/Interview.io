@@ -1,0 +1,9 @@
+#logo {
+  height: 30px;
+}
+
+@media (min-width: 1024px) {
+  #logo {
+    height: 35px;
+  }
+}
