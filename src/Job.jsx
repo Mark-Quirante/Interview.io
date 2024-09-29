@@ -7,7 +7,7 @@ import Button from "./components/Button";
 
 function ButtonLink({ to, children }) {
 	return (
-		<Link className="flex justify-end" to={to}>
+		<Link to={to}>
 			<Button>{children}</Button>
 		</Link>
 	);
@@ -60,7 +60,9 @@ function Job() {
 						onChange={(e) => setJobDescription(e.target.value)}
 					></textarea>
 				</form>
+				<div className="flex justify-end">
 				<ButtonLink to="/Starter">Start</ButtonLink>
+				</div>
 			</Card>
 		</div>
 	);
