@@ -24,15 +24,15 @@ function Job() {
 	} = useContext(JobContext);
 
 	return (
-		<div className="flex flex-col lg:flex-row">
+		<div className="flex flex-col items-center lg:flex-row">
 			<div className="flex flex-col items-center lg:items-start lg:flex-[3_3_0%] lg:mr-5 text-white">
 				<h1>Interview.io</h1>
-				<p className="text-center mb-5 lg:text-start">
+				<p className="text-center mb-8 lg:mb-16 lg:text-start">
 					Practice your responses, receive instant feedback, and refine your answers with a personalized mock interview.
 				</p>
 				<img className="lg:w-full lg:relative lg:left-[50px]" src={InterviewPrep} alt="Group prepping for interview"/>
 			</div>
-			<Card className="mt-[-20px] lg:mt-0 lg:flex-[2_2_0%] lg:z-[1]">
+			<Card className="w-full max-w-[500px] mt-[-20px] lg:mt-0 lg:flex-[2_2_0%] lg:z-[1]">
 				<div className="text-center mb-5">
 					<p className="font-bold">Let&apos;s begin your mock interview.</p>
 					<p>To start, tell me about the job.</p>
