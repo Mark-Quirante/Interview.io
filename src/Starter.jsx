@@ -27,14 +27,16 @@ function Starter() {
 						messages: [
 							{
 								role: "system",
-								content: "You are a helpful assistant for mock interviews.",
+								content:
+									"You are a helpful assistant for mock interviews. Do not provide formalities",
 							},
 							{
 								role: "user",
-								content: `Tell me about the company titled "${companyName}".`,
+								content: `Tell me about the company titled "${companyName}". Provide a general overview 
+								of the business.`,
 							},
 						],
-						max_tokens: 150, // Adjust token limit as necessary
+						max_tokens: 250, // Adjust token limit as necessary
 						temperature: 0.7,
 					});
 
@@ -52,9 +54,7 @@ function Starter() {
 	return (
 		<div className="container">
 			<h1>Welcome to your Mock Interview!</h1>
-			<h2>
-				Let me tell you something about the company titled + {companyName}
-			</h2>
+			<h2>Let me tell you something about the company titled: {companyName}</h2>
 			<p>{responseText ? responseText : "Loading company details..."}</p>
 			<p>Ready to start the interview?</p>
 			<ButtonLink to="/Interview">YES</ButtonLink>

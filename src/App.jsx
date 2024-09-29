@@ -8,23 +8,25 @@ import { OpenAIProvider } from "./OpenAIContext";
 import MicRecorderProvider from "./provider/MicRecorderProvider";
 import Interview from "./Interview";
 import Results from "./Results";
-
+import { InterviewAnswersProvider } from "./InterviewAnswersContext";
 function App() {
 	return (
 		<OpenAIProvider>
 			<JobProvider>
 				<MicRecorderProvider>
-					<Router>
-						<Navbar />
-						<div>
-							<Routes>
-								<Route path="/" element={<Job />} />
-								<Route path="/Starter" element={<Starter />} />
-								<Route path="/Interview" element={<Interview />} />
-								<Route path="/Results" element={<Results />} />
-							</Routes>
-						</div>
-					</Router>
+					<InterviewAnswersProvider>
+						<Router>
+							<Navbar />
+							<div>
+								<Routes>
+									<Route path="/" element={<Job />} />
+									<Route path="/Starter" element={<Starter />} />
+									<Route path="/Interview" element={<Interview />} />
+									<Route path="/Results" element={<Results />} />
+								</Routes>
+							</div>
+						</Router>
+					</InterviewAnswersProvider>
 				</MicRecorderProvider>
 			</JobProvider>
 		</OpenAIProvider>

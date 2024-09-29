@@ -38,7 +38,7 @@ function Interview() {
 							},
 							{
 								role: "user",
-								content: `Ask me one question about "${jobTitle}" with "${companyName}" and "${jobDescription}".`,
+								content: `Ask me one question about "${jobTitle}" with "${companyName}" and "${jobDescription}". A question an interviewer may ask to see if the applicant fits the role`,
 							},
 						],
 						max_tokens: 150,
