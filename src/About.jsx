@@ -12,28 +12,28 @@ function About() {
 						className="object-cover h-75 w-96 rounded-full"
 						src={imageAJ}
 					></img>
-					<p className="text-2xl">Augustus Jay Del Rosario</p>
+					<p className="text-2xl text-white">Augustus Jay Del Rosario</p>
 				</li>
 				<li>
 					<img
 						className="object-cover h-75 w-96 rounded-full"
 						src={imageAngel}
 					></img>
-					<p className="text-2xl">Angelica Mapeso</p>
+					<p className="text-2xl text-white">Angelica Mapeso</p>
 				</li>
 				<li>
 					<img
 						className="object-cover h-44 w-96 rounded-full"
 						src={imageMonica}
 					></img>
-					<p className="text-2xl">Monica Mobashera</p>
+					<p className="text-2xl text-white">Monica Mobashera</p>
 				</li>
 				<li>
 					<img
 						className="object-cover h-75 w-96 rounded-full"
 						src={imageMark}
 					></img>
-					<p className="text-2xl">Mark Quirante</p>
+					<p className="text-2xl text-white">Mark Quirante</p>
 				</li>
 			</ul>
 		</div>
