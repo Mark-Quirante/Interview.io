@@ -19,10 +19,7 @@ function Interview() {
 	const { jobTitle, companyName, jobDescription } = useContext(JobContext);
 	const { clearObjects } = useContext(MicRecorderContext);
 
-	console.log(jobTitle);
-
-	const [questions, setQuestions] = useState([]);
-	const { interviewAnswers, setInterviewAnswers } = useContext(
+	const { interviewData, setInterviewData } = useContext(
 		InterviewAnswersContext
 	);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -49,14 +46,19 @@ function Interview() {
 					});
 
 					const newQuestion = response.choices[0].message.content;
-					setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
+
+					// Add the new question to the interview data
+					setInterviewData((prevData) => [
+						...prevData,
+						{ question: newQuestion, answer: "" },
+					]);
 				} catch (error) {
 					console.error("Error fetching from OpenAI API:", error);
 				}
 			}
 		};
 
-		if (currentQuestionIndex < 4) {
+		if (currentQuestionIndex < 5) {
 			fetchOpenAIQuestion();
 		}
 	}, [
@@ -69,10 +71,13 @@ function Interview() {
 
 	// Handler for storing the answer
 	const handleAnswer = (answer) => {
-		setInterviewAnswers((prevAnswers) => {
-			const newAnswers = [...prevAnswers];
-			newAnswers[currentQuestionIndex] = answer;
-			return newAnswers;
+		setInterviewData((prevData) => {
+			const updatedData = [...prevData];
+			updatedData[currentQuestionIndex] = {
+				...updatedData[currentQuestionIndex],
+				answer,
+			};
+			return updatedData;
 		});
 	};
 
@@ -87,14 +92,14 @@ function Interview() {
 	return (
 		<div>
 			<h1>Interview</h1>
-			{questions[currentQuestionIndex] && (
+			{interviewData[currentQuestionIndex] && (
 				<div key={currentQuestionIndex} style={{ marginBottom: "20px" }}>
 					<h2>
 						Question {currentQuestionIndex + 1}:{" "}
-						{questions[currentQuestionIndex]}
+						{interviewData[currentQuestionIndex].question}
 					</h2>
-					{interviewAnswers[currentQuestionIndex] ? (
-						<p>Your Answer: {interviewAnswers[currentQuestionIndex]}</p>
+					{interviewData[currentQuestionIndex].answer ? (
+						<p>Your Answer: {interviewData[currentQuestionIndex].answer}</p>
 					) : (
 						<SpeechToText
 							setAnswer={handleAnswer}
@@ -103,16 +108,22 @@ function Interview() {
 					)}
 				</div>
 			)}
-			{currentQuestionIndex < 4 && questions.length > currentQuestionIndex && (
-				<button onClick={nextQuestion}>Next Question</button>
-			)}
+			{currentQuestionIndex < 4 &&
+				interviewData.length > currentQuestionIndex && (
+					<button onClick={nextQuestion}>Next Question</button>
+				)}
 			{currentQuestionIndex === 4 && (
 				<div>
 					<h2>Summary of Answers:</h2>
-					{interviewAnswers.map((answer, index) => (
-						<p key={index}>
-							Answer {index + 1}: {answer}
-						</p>
+					{interviewData.map((item, index) => (
+						<div key={index}>
+							<p>
+								Question {index + 1}: {item.question}
+							</p>
+							<p>
+								Answer {index + 1}: {item.answer}
+							</p>
+						</div>
 					))}
 				</div>
 			)}

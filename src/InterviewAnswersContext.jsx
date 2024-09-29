@@ -1,13 +1,17 @@
+// InterviewAnswersContext.js
 import { createContext, useState } from "react";
 
 export const InterviewAnswersContext = createContext();
 
 export const InterviewAnswersProvider = ({ children }) => {
-	const [interviewAnswers, setInterviewAnswers] = useState([]);
+	const [interviewData, setInterviewData] = useState([]);
 
 	return (
 		<InterviewAnswersContext.Provider
-			value={{ interviewAnswers, setInterviewAnswers }}
+			value={{
+				interviewData,
+				setInterviewData,
+			}}
 		>
 			{children}
 		</InterviewAnswersContext.Provider>

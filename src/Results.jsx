@@ -1,16 +1,21 @@
 import { useContext } from "react";
 import { InterviewAnswersContext } from "./InterviewAnswersContext";
-import { OpenAIContext } from "./OpenAIContext";
+
 function Results() {
-	const { interviewAnswers } = useContext(InterviewAnswersContext);
+	const { interviewData } = useContext(InterviewAnswersContext);
 
 	return (
 		<div>
-			<h2>Summary of Answers:</h2>
-			{interviewAnswers.map((answer, index) => (
-				<p key={index}>
-					Answer {index + 1}: {answer}
-				</p>
+			<h2>Summary of results:</h2>
+			{interviewData.slice(0, 5).map((item, index) => (
+				<div key={index} style={{ marginBottom: "20px" }}>
+					<p>
+						<strong>Question {index + 1}:</strong> {item.question}
+					</p>
+					<p>
+						<strong>Answer {index + 1}:</strong> {item.answer}
+					</p>
+				</div>
 			))}
 		</div>
 	);
