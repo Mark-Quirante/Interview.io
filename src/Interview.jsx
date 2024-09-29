@@ -2,6 +2,15 @@ import { useContext, useState, useEffect } from "react";
 import { OpenAIContext } from "./OpenAIContext";
 import { JobContext } from "./JobContext";
 import SpeechToText from "../src/components/SpeechToText";
+import { Link } from "react-router-dom";
+
+function ButtonLink({ to, children }) {
+	return (
+		<Link to={to}>
+			<button>{children}</button>
+		</Link>
+	);
+}
 
 function Interview() {
 	const openai = useContext(OpenAIContext);
@@ -94,6 +103,7 @@ function Interview() {
 					))}
 				</div>
 			)}
+			<ButtonLink to="/Results">Results</ButtonLink>
 		</div>
 	);
 }
