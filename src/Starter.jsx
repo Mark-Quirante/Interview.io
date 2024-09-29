@@ -1,6 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { OpenAIContext } from "./OpenAIContext";
 import { JobContext } from "./JobContext";
+import { Link } from "react-router-dom";
+
+function ButtonLink({ to, children }) {
+	return (
+		<Link to={to}>
+			<button>{children}</button>
+		</Link>
+	);
+}
 
 function Starter() {
 	const openai = useContext(OpenAIContext); // Access OpenAI context
@@ -48,7 +57,7 @@ function Starter() {
 			</h2>
 			<p>{responseText ? responseText : "Loading company details..."}</p>
 			<p>Ready to start the interview?</p>
-			<button type="submit">Start</button>
+			<ButtonLink to="/Interview">YES</ButtonLink>
 			<p>Please enable microphone functionality for best results!</p>
 		</div>
 	);

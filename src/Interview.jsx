@@ -1,71 +1,97 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { OpenAIContext } from "./OpenAIContext";
+import { JobContext } from "./JobContext";
 import SpeechToText from "../src/components/SpeechToText";
 
 function Interview() {
 	const openai = useContext(OpenAIContext);
+	const { jobTitle, companyName, jobDescription } = useContext(JobContext);
+	console.log(jobTitle);
 
-	const [interviewAnswer1, setInterviewAnswer1] = useState("");
-	const [interviewAnswer2, setInterviewAnswer2] = useState("");
-	const [interviewAnswer3, setInterviewAnswer3] = useState("");
-	const [interviewAnswer4, setInterviewAnswer4] = useState("");
-	const [interviewAnswer5, setInterviewAnswer5] = useState("");
+	const [questions, setQuestions] = useState([]);
+	const [interviewAnswers, setInterviewAnswers] = useState([]);
+	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-	const [currentQuestion, setCurrentQuestion] = useState(1);
+	// Fetch a question from OpenAI based on the job title
+	useEffect(() => {
+		const fetchOpenAIQuestion = async () => {
+			if (jobTitle) {
+				try {
+					const response = await openai.chat.completions.create({
+						model: "gpt-4",
+						messages: [
+							{
+								role: "system",
+								content: "You are an interviewer.",
+							},
+							{
+								role: "user",
+								content: `Ask me one question about "${jobTitle}" with "${companyName}" and "${jobDescription}".`,
+							},
+						],
+						max_tokens: 150,
+						temperature: 0.7,
+					});
 
-	// Helper function to go to the next question
-	const nextQuestion = () => {
-		if (currentQuestion < 5) {
-			setCurrentQuestion(currentQuestion + 1);
+					const newQuestion = response.choices[0].message.content;
+					setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
+				} catch (error) {
+					console.error("Error fetching from OpenAI API:", error);
+				}
+			}
+		};
+
+		if (currentQuestionIndex < 4) {
+			fetchOpenAIQuestion();
 		}
+	}, [jobTitle, currentQuestionIndex]);
+
+	// Handler for storing the answer
+	const handleAnswer = (answer) => {
+		setInterviewAnswers((prevAnswers) => {
+			const newAnswers = [...prevAnswers];
+			newAnswers[currentQuestionIndex] = answer;
+			return newAnswers;
+		});
 	};
 
-	// Render the appropriate SpeechToText component based on the current question
-	const renderCurrentQuestion = () => {
-		switch (currentQuestion) {
-			case 1:
-				return (
-					<SpeechToText setAnswer={setInterviewAnswer1} questionNumber={1} />
-				);
-			case 2:
-				return (
-					<SpeechToText setAnswer={setInterviewAnswer2} questionNumber={2} />
-				);
-			case 3:
-				return (
-					<SpeechToText setAnswer={setInterviewAnswer3} questionNumber={3} />
-				);
-			case 4:
-				return (
-					<SpeechToText setAnswer={setInterviewAnswer4} questionNumber={4} />
-				);
-			case 5:
-				return (
-					<SpeechToText setAnswer={setInterviewAnswer5} questionNumber={5} />
-				);
-			default:
-				return <p>All questions completed!</p>;
+	// Handler for moving to the next question
+	const nextQuestion = () => {
+		if (currentQuestionIndex < 4) {
+			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		}
 	};
 
 	return (
 		<div>
 			<h1>Interview</h1>
-			{renderCurrentQuestion()} {/* Show the current question */}
-			<h2>Question number {currentQuestion}</h2>
-			{/* Show the Next button only if it's not the last question */}
-			{currentQuestion < 5 && (
+			{questions[currentQuestionIndex] && (
+				<div key={currentQuestionIndex} style={{ marginBottom: "20px" }}>
+					<h2>
+						Question {currentQuestionIndex + 1}:{" "}
+						{questions[currentQuestionIndex]}
+					</h2>
+					{interviewAnswers[currentQuestionIndex] ? (
+						<p>Your Answer: {interviewAnswers[currentQuestionIndex]}</p>
+					) : (
+						<SpeechToText
+							setAnswer={handleAnswer}
+							questionNumber={currentQuestionIndex + 1}
+						/>
+					)}
+				</div>
+			)}
+			{currentQuestionIndex < 4 && questions.length > currentQuestionIndex && (
 				<button onClick={nextQuestion}>Next Question</button>
 			)}
-			{/* Display summary after all questions */}
-			{currentQuestion > 5 && (
+			{currentQuestionIndex === 4 && (
 				<div>
 					<h2>Summary of Answers:</h2>
-					<p>Answer 1: {interviewAnswer1}</p>
-					<p>Answer 2: {interviewAnswer2}</p>
-					<p>Answer 3: {interviewAnswer3}</p>
-					<p>Answer 4: {interviewAnswer4}</p>
-					<p>Answer 5: {interviewAnswer5}</p>
+					{interviewAnswers.map((answer, index) => (
+						<p key={index}>
+							Answer {index + 1}: {answer}
+						</p>
+					))}
 				</div>
 			)}
 		</div>
