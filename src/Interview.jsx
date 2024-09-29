@@ -4,6 +4,7 @@ import { JobContext } from "./JobContext";
 import SpeechToText from "../src/components/SpeechToText";
 import { Link } from "react-router-dom";
 import { MicRecorderContext } from "./provider/MicRecorderProvider";
+import { InterviewAnswersContext } from "./InterviewAnswersContext";
 
 function ButtonLink({ to, children }) {
 	return (
@@ -21,7 +22,9 @@ function Interview() {
 	console.log(jobTitle);
 
 	const [questions, setQuestions] = useState([]);
-	const [interviewAnswers, setInterviewAnswers] = useState([]);
+	const { interviewAnswers, setInterviewAnswers } = useContext(
+		InterviewAnswersContext
+	);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
 	// Fetch a question from OpenAI based on the job title
