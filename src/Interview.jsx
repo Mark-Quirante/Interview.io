@@ -64,8 +64,6 @@ function Interview() {
 
 	// Handler for storing the answer
 	const handleAnswer = (answer) => {
-		console.log('Answer', answer)
-
 		setInterviewAnswers((prevAnswers) => {
 			const newAnswers = [...prevAnswers];
 			newAnswers[currentQuestionIndex] = answer;
