@@ -88,34 +88,36 @@ function Interview() {
 	};
 
 	return (
-		<div className="flex flex-col flex-1 items-center">
-			{interviewData[currentQuestionIndex] && (
+		<div className="flex flex-col flex-1 items-center w-full">
 				<div
-					className="flex flex-col items-center flex-1"
+					className="flex flex-col items-center flex-1 w-full"
 					key={currentQuestionIndex}
-				>
+					>
 					<div className="text-white text-center mb-5">
 						<h1>Question {currentQuestionIndex + 1}</h1>
 						<p>out of 5</p>
 					</div>
-					<Card className="flex flex-col items-center flex-1">
-						<p className="text-center font-bold text-xl">
-							{interviewData[currentQuestionIndex].question}
-						</p>
-						<AnswerBox
-							setAnswer={handleAnswer}
-							answer={interviewData[currentQuestionIndex].answer}
-						/>
-						{currentQuestionIndex < 4 &&
-							interviewData.length > currentQuestionIndex && (
-								<Button className="w-full" onClick={nextQuestion}>
-									Next Question
-								</Button>
-							)}
+					<Card className="flex flex-col items-center flex-1 min-w-full">
+						{interviewData[currentQuestionIndex] && (
+							<>
+								<p className="text-center font-bold text-xl">
+									{interviewData[currentQuestionIndex].question}
+								</p>
+								<AnswerBox
+									setAnswer={handleAnswer}
+									answer={interviewData[currentQuestionIndex].answer}
+								/>
+								{currentQuestionIndex < 4 &&
+									interviewData.length > currentQuestionIndex && (
+										<Button className="w-full" onClick={nextQuestion}>
+											Next Question
+										</Button>
+									)}
+							</>
+						)}
 					</Card>
 				</div>
-			)}
-			<ButtonLink to="/Results">End Interview</ButtonLink>
+			{(interviewData[currentQuestionIndex] || currentQuestionIndex > 0) && <ButtonLink to="/Results">End Interview</ButtonLink>}
 		</div>
 	);
 }

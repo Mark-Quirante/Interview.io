@@ -20,7 +20,7 @@ function App() {
 					<InterviewAnswersProvider>
 						<Router basename="/Interview.io/">
 							<Navbar />
-							<div className="p-5 md:p-10 lg:p-8 max-w-[900px] flex flex-col flex-1">
+							<div className="p-5 md:p-10 lg:p-8 max-w-[900px] flex flex-col flex-1 w-full">
 								<Routes>
 									<Route path="/" element={<Job />} />
 									<Route path="/Starter" element={<Starter />} />
