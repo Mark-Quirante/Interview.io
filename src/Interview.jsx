@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { OpenAIContext } from "./OpenAIContext";
 import SpeechToText from "../src/components/SpeechToText";
 
-export default function Interview() {
+function Interview() {
 	const openai = useContext(OpenAIContext);
 
 	const [interviewAnswer1, setInterviewAnswer1] = useState("");

@@ -7,7 +7,6 @@ import { JobProvider } from "./JobContext";
 import { OpenAIProvider } from "./OpenAIContext";
 import MicRecorderProvider from "./provider/MicRecorderProvider";
 import Interview from "./Interview";
-import SpeechToText from "./components/SpeechToText";
 
 function App() {
 	return (
@@ -20,7 +19,7 @@ function App() {
 							<Routes>
 								<Route path="/" element={<Job />} />
 								<Route path="/Starter" element={<Starter />} />
-								<Route path="/Interview" element={<SpeechToText />} />
+								<Route path="/Interview" element={<Interview />} />
 							</Routes>
 						</div>
 					</Router>
