@@ -59,7 +59,7 @@ function Starter() {
 					<span className="text-light-green text-[1.5em] lg:text-[1.1em]">{jobTitle} Position</span><br /><span className="font-normal">at 
 					<span className="text-light-green"> {companyName}</span></span>
 				</h1>
-				<img className="relative lg:top-[50px] lg:scale-150 w-full max-w-[500px] lg:flex-1" src={InterviewStart} alt="Job interview underway" />
+				<img className="relative lg:top-[50px] lg:scale-150 w-full max-w-[75%] lg:max-w-[500px] lg:flex-1" src={InterviewStart} alt="Job interview underway" />
 			</div>
 			<Card className="flex flex-col items-center relative mt-[-30px] z-[100] mb-5">
 				<h2 className="text-center mb-5">
