@@ -10,19 +10,16 @@ function Results() {
 	const { interviewData } = useContext(InterviewAnswersContext);
 	const { jobTitle, companyName } = useContext(JobContext);
 	const openai = useContext(OpenAIContext);
-	const [analysisResult, setAnalysisResult] = useState(""); // State for storing the combined analysis
-	const [isLoading, setIsLoading] = useState(false); // Loading state for the analysis
+	const [analysisResult, setAnalysisResult] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 
-	// Function to analyze all answers using OpenAI API
 	const analyzeAnswers = async () => {
 		setIsLoading(true);
 		try {
-			// Prepare the combined prompt with all questions and answers
 			const userPrompt = interviewData
 				.map((item) => `Q: ${item.question}\nA: ${item.answer}`)
 				.join("\n\n");
 
-			// Send the combined data to OpenAI for a single analysis
 			const response = await openai.chat.completions.create({
 				model: "gpt-4",
 				messages: [
@@ -40,7 +37,6 @@ function Results() {
 				temperature: 0.7,
 			});
 
-			// Store the single analysis result
 			setAnalysisResult(response.choices[0].message.content);
 		} catch (error) {
 			console.error("Error fetching from OpenAI API:", error);
