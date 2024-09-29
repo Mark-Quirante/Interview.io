@@ -41,7 +41,7 @@ function Interview() {
 								content: `Ask me one question about "${jobTitle}" with "${companyName}" and "${jobDescription}". A question an interviewer may ask to see if the applicant fits the role`,
 							},
 						],
-						max_tokens: 150,
+
 						temperature: 0.7,
 					});
 
@@ -91,19 +91,28 @@ function Interview() {
 	return (
 		<div className="flex flex-col flex-1 items-center">
 			{interviewData[currentQuestionIndex] && (
-				<div className="flex flex-col items-center flex-1" key={currentQuestionIndex}>
+				<div
+					className="flex flex-col items-center flex-1"
+					key={currentQuestionIndex}
+				>
 					<div className="text-white text-center mb-5">
-						<h1>
-							Question {currentQuestionIndex + 1}
-						</h1>
+						<h1>Question {currentQuestionIndex + 1}</h1>
 						<p>out of 5</p>
 					</div>
 					<Card className="flex flex-col items-center flex-1">
-						<p className="text-center font-bold text-xl">{interviewData[currentQuestionIndex].question}</p>
-						<AnswerBox setAnswer={handleAnswer} answer={interviewData[currentQuestionIndex].answer}/>
-						{currentQuestionIndex < 4 && interviewData.length > currentQuestionIndex && (
-							<Button className="w-full" onClick={nextQuestion}>Next Question</Button>
-						)}
+						<p className="text-center font-bold text-xl">
+							{interviewData[currentQuestionIndex].question}
+						</p>
+						<AnswerBox
+							setAnswer={handleAnswer}
+							answer={interviewData[currentQuestionIndex].answer}
+						/>
+						{currentQuestionIndex < 4 &&
+							interviewData.length > currentQuestionIndex && (
+								<Button className="w-full" onClick={nextQuestion}>
+									Next Question
+								</Button>
+							)}
 					</Card>
 				</div>
 			)}
