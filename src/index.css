@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --green: #458F70;
+    --dark-gren: #084229;
+    --light-green: #C3ECDB;
+    --gray: #BFBFBF;
+    --dark-gray: #8C8A8B;
+
+    --laptop: 1024px;
+  }
+}
+
+html, body, #root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: var(--dark-gren);
+}
+
+html {
+  min-height: 100%;
+}
+
+#root {
+  align-items: center;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+input, textarea {
+  border: 1px solid var(--gray);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+  }
+
+  p, label, a, input {
+    font-size: 1.05rem;
+  }
+}

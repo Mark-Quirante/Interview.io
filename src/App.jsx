@@ -7,6 +7,7 @@ import { JobProvider } from "./JobContext";
 import { OpenAIProvider } from "./OpenAIContext";
 import MicRecorderProvider from "./provider/MicRecorderProvider";
 import Interview from "./Interview";
+import Footer from "./Footer";
 import Results from "./Results";
 import { InterviewAnswersProvider } from "./InterviewAnswersContext";
 function App() {
@@ -17,7 +18,7 @@ function App() {
 					<InterviewAnswersProvider>
 						<Router>
 							<Navbar />
-							<div>
+							<div className="p-5 md:p-10 lg:p-8 max-w-[900px] flex flex-col flex-1">
 								<Routes>
 									<Route path="/" element={<Job />} />
 									<Route path="/Starter" element={<Starter />} />
@@ -25,6 +26,7 @@ function App() {
 									<Route path="/Results" element={<Results />} />
 								</Routes>
 							</div>
+							<Footer />
 						</Router>
 					</InterviewAnswersProvider>
 				</MicRecorderProvider>

@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { MicRecorderContext } from "../provider/MicRecorderProvider";
 import { OpenAIContext } from "../OpenAIContext";
 
-function SpeechToText({ setAnswer }) {
-	const { isRecording, recordedBlob, mediaURL, beginRecording, stopRecording } =
+
+function SpeechToText({ className }) {
+	const { recordedBlob, mediaURL, setTranscription } =
 		useContext(MicRecorderContext);
 	const openai = useContext(OpenAIContext);
-  const [transcription, setTranscription] = useState("");
 
 	useEffect(() => {
 		if (recordedBlob?.stream) {
@@ -23,19 +23,9 @@ function SpeechToText({ setAnswer }) {
     setTranscription(transcription.text);
 	};
 
-  const onSubmit = () => {
-    setAnswer(transcription);
-  };
-
 	return (
-		<div>
-			{!isRecording ? (
-				<button onClick={beginRecording}>Begin Recording</button>
-			) : (
-				<button onClick={stopRecording}>Stop Recording</button>
-			)}
+		<div className={className}>
 			{mediaURL && <audio controls src={mediaURL}></audio>}
-			{recordedBlob?.stream && <button onClick={onSubmit}>Submit</button>}
 		</div>
 	);
 }

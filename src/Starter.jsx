@@ -2,18 +2,21 @@ import { useContext, useEffect, useState } from "react";
 import { OpenAIContext } from "./OpenAIContext";
 import { JobContext } from "./JobContext";
 import { Link } from "react-router-dom";
+import Card from "./components/Card";
+import InterviewStart from "./assets/interview_start.svg";
+import Button from "./components/Button";
 
 function ButtonLink({ to, children }) {
 	return (
-		<Link to={to}>
-			<button>{children}</button>
+		<Link className="mt-8 font-bold inline-block w-full max-w-[400px]" to={to}>
+			<Button className="w-full">{children}</Button>
 		</Link>
 	);
 }
 
 function Starter() {
 	const openai = useContext(OpenAIContext); // Access OpenAI context
-	const { companyName } = useContext(JobContext); // Access jobTitle from JobContext
+	const { jobTitle, companyName } = useContext(JobContext); // Access jobTitle from JobContext
 	const [responseText, setResponseText] = useState(""); // State to hold the API response
 
 	// useEffect to handle the API call when the component mounts or when jobTitle changes
@@ -53,12 +56,20 @@ function Starter() {
 
 	return (
 		<div className="container">
-			<h1>Welcome to your Mock Interview!</h1>
-			<h2>Let me tell you something about the company titled: {companyName}</h2>
-			<p>{responseText ? responseText : "Loading company details..."}</p>
-			<p>Ready to start the interview?</p>
-			<ButtonLink to="/Interview">YES</ButtonLink>
-			<p>Please enable microphone functionality for best results!</p>
+			<div className="flex flex-col lg:flex-row items-center lg:items-end mb-8 lg:mb-16">
+				<h1 className="text-white text-center lg:text-start mb-5 lg:flex-[3_3_0%] lg:text-[2rem]">Welcome to your mock interview for the<br />
+					<span className="text-light-green text-[1.5em] lg:text-[1.1em]">{jobTitle} Position</span><br /><span className="font-normal">at 
+					<span className="text-light-green"> {companyName}</span></span>
+				</h1>
+				<img className="relative lg:top-[50px] lg:scale-150 w-full max-w-[75%] lg:max-w-[500px] lg:flex-1" src={InterviewStart} alt="Job interview underway" />
+			</div>
+			<Card className="flex flex-col items-center relative mt-[-30px] z-[100] mb-5">
+				<p className="text-center mb-5 text-xl font-bold">
+					Let me tell you a little bit about the company.
+				</p>
+				<p className="text-green mb-5">{responseText ? responseText : "Loading company details..."}</p>
+			{responseText && <ButtonLink to="/Interview">Start answering<br/>Interview Questions</ButtonLink>}
+			</Card>
 		</div>
 	);
 }
