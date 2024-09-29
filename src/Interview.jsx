@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Card from "./components/Card";
 import Button from "./components/Button";
 import AnswerBox from "./components/AnswerBox";
+import { InterviewAnswersContext } from "./InterviewAnswersContext";
 
 function ButtonLink({ to, children }) {
 	return (
@@ -18,8 +19,9 @@ function Interview() {
 	const openai = useContext(OpenAIContext);
 	const { jobTitle, companyName, jobDescription } = useContext(JobContext);
 
-	const [questions, setQuestions] = useState([]);
-	const [interviewAnswers, setInterviewAnswers] = useState([]);
+	const { interviewData, setInterviewData } = useContext(
+		InterviewAnswersContext
+	);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
 	// Fetch a question from OpenAI based on the job title
@@ -36,7 +38,7 @@ function Interview() {
 							},
 							{
 								role: "user",
-								content: `Ask me one question about "${jobTitle}" with "${companyName}" and "${jobDescription}".`,
+								content: `Ask me one question about "${jobTitle}" with "${companyName}" and "${jobDescription}". A question an interviewer may ask to see if the applicant fits the role`,
 							},
 						],
 						max_tokens: 150,
@@ -44,14 +46,19 @@ function Interview() {
 					});
 
 					const newQuestion = response.choices[0].message.content;
-					setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
+
+					// Add the new question to the interview data
+					setInterviewData((prevData) => [
+						...prevData,
+						{ question: newQuestion, answer: "" },
+					]);
 				} catch (error) {
 					console.error("Error fetching from OpenAI API:", error);
 				}
 			}
 		};
 
-		if (currentQuestionIndex < 4) {
+		if (currentQuestionIndex < 5) {
 			fetchOpenAIQuestion();
 		}
 	}, [
@@ -64,10 +71,13 @@ function Interview() {
 
 	// Handler for storing the answer
 	const handleAnswer = (answer) => {
-		setInterviewAnswers((prevAnswers) => {
-			const newAnswers = [...prevAnswers];
-			newAnswers[currentQuestionIndex] = answer;
-			return newAnswers;
+		setInterviewData((prevData) => {
+			const updatedData = [...prevData];
+			updatedData[currentQuestionIndex] = {
+				...updatedData[currentQuestionIndex],
+				answer,
+			};
+			return updatedData;
 		});
 	};
 
@@ -80,7 +90,7 @@ function Interview() {
 
 	return (
 		<div className="flex flex-col flex-1 items-center">
-			{questions[currentQuestionIndex] && (
+			{interviewData[currentQuestionIndex] && (
 				<div className="flex flex-col items-center flex-1" key={currentQuestionIndex}>
 					<div className="text-white text-center mb-5">
 						<h1>
@@ -89,25 +99,14 @@ function Interview() {
 						<p>out of 5</p>
 					</div>
 					<Card className="flex flex-col items-center flex-1">
-						<p className="text-center font-bold text-xl">{questions[currentQuestionIndex]}</p>
-						<AnswerBox setAnswer={handleAnswer} answer={interviewAnswers[currentQuestionIndex]}/>
-						{currentQuestionIndex < 4 && questions.length > currentQuestionIndex && (
+						<p className="text-center font-bold text-xl">{interviewData[currentQuestionIndex].question}</p>
+						<AnswerBox setAnswer={handleAnswer} answer={interviewData[currentQuestionIndex].answer}/>
+						{currentQuestionIndex < 4 && interviewData.length > currentQuestionIndex && (
 							<Button className="w-full" onClick={nextQuestion}>Next Question</Button>
 						)}
 					</Card>
 				</div>
 			)}
-			
-			{/* {currentQuestionIndex === 4 && (
-				<div>
-					<h2>Summary of Answers:</h2>
-					{interviewAnswers.map((answer, index) => (
-						<p key={index}>
-							Answer {index + 1}: {answer}
-						</p>
-					))}
-				</div>
-			)} */}
 			<ButtonLink to="/Results">End Interview</ButtonLink>
 		</div>
 	);

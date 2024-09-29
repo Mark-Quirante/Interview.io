@@ -30,14 +30,16 @@ function Starter() {
 						messages: [
 							{
 								role: "system",
-								content: "You are a helpful assistant for mock interviews.",
+								content:
+									"You are a helpful assistant for mock interviews. Do not provide formalities",
 							},
 							{
 								role: "user",
-								content: `Tell me about the company titled "${companyName}".`,
+								content: `Tell me about the company titled "${companyName}". Provide a general overview 
+								of the business.`,
 							},
 						],
-						max_tokens: 150, // Adjust token limit as necessary
+						max_tokens: 250, // Adjust token limit as necessary
 						temperature: 0.7,
 					});
 
