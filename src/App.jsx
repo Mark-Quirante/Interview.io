@@ -5,11 +5,13 @@ import Job from "./Job";
 import Starter from "./Starter";
 import { JobProvider } from "./JobContext";
 import { OpenAIProvider } from "./OpenAIContext";
+import MicRecorderProvider from "./provider/MicRecorderProvider";
 
 function App() {
 	return (
 		<OpenAIProvider>
 			<JobProvider>
+				<MicRecorderProvider>
 				<Router>
 					<Navbar />
 					<div>
@@ -19,6 +21,7 @@ function App() {
 						</Routes>
 					</div>
 				</Router>
+				</MicRecorderProvider>
 			</JobProvider>
 		</OpenAIProvider>
 	);

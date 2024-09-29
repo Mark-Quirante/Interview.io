@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { JobContext } from "./JobContext";
 import { Link } from "react-router-dom";
+import SpeechToText from "./components/SpeechToText";
 
 function ButtonLink({ to, children }) {
 	return (
@@ -22,6 +23,7 @@ function Job() {
 
 	return (
 		<div>
+			<SpeechToText/>
 			<div>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta velit
