@@ -20,7 +20,7 @@ function App() {
 							<Routes>
 								<Route path="/" element={<Job />} />
 								<Route path="/Starter" element={<Starter />} />
-								<Route path="/Interview" element={<Interview />} />
+								<Route path="/Interview" element={<SpeechToText />} />
 							</Routes>
 						</div>
 					</Router>

@@ -1,15 +1,17 @@
-import video from "./assets/InterviewLogo_optimized.gif";
+import video from "./assets/Interview.io.png";
 
 function Navbar() {
 	return (
-		<nav className="bg-green-500 p-10">
+		<nav className="bg-green-500 p-5 flex justify-between items-center">
 			<img
 				src={video}
 				alt="Interview.io Logo"
-				style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+				style={{ width: "200px", height: "200px", borderRadius: "50%" }}
 			></img>
-			<p>Land that job!</p>
-			<p>About Us</p>
+			<ul>
+				<li>Land that job!</li>
+				<li>About us</li>
+			</ul>
 		</nav>
 	);
 }

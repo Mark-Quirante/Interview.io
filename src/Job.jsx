@@ -23,7 +23,7 @@ function Job() {
 
 	return (
 		<div>
-			<SpeechToText/>
+			<SpeechToText />
 			<div>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta velit
