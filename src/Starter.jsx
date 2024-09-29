@@ -12,18 +12,16 @@ function ButtonLink({ to, children }) {
 }
 
 function Starter() {
-	const openai = useContext(OpenAIContext); // Access OpenAI context
-	const { companyName } = useContext(JobContext); // Access jobTitle from JobContext
-	const [responseText, setResponseText] = useState(""); // State to hold the API response
+	const openai = useContext(OpenAIContext);
+	const { companyName } = useContext(JobContext);
+	const [responseText, setResponseText] = useState("");
 
-	// useEffect to handle the API call when the component mounts or when jobTitle changes
 	useEffect(() => {
 		const fetchOpenAIResponse = async () => {
 			if (companyName) {
-				// Ensure jobTitle is available
 				try {
 					const response = await openai.chat.completions.create({
-						model: "gpt-4o", // Specify the model
+						model: "gpt-4o",
 						messages: [
 							{
 								role: "system",
@@ -36,11 +34,10 @@ function Starter() {
 								of the business.`,
 							},
 						],
-						max_tokens: 250, // Adjust token limit as necessary
+						max_tokens: 250,
 						temperature: 0.7,
 					});
 
-					// Set the API response text to state
 					setResponseText(response.choices[0].message.content);
 				} catch (error) {
 					console.error("Error fetching from OpenAI API:", error);
@@ -49,7 +46,7 @@ function Starter() {
 		};
 
 		fetchOpenAIResponse();
-	}, [companyName, openai]); // Dependency array includes companyName and openai
+	}, [companyName, openai]);
 
 	return (
 		<div className="container">

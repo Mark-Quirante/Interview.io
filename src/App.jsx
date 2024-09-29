@@ -9,6 +9,8 @@ import MicRecorderProvider from "./provider/MicRecorderProvider";
 import Interview from "./Interview";
 import Results from "./Results";
 import { InterviewAnswersProvider } from "./InterviewAnswersContext";
+import About from "./About";
+
 function App() {
 	return (
 		<OpenAIProvider>
@@ -23,6 +25,7 @@ function App() {
 									<Route path="/Starter" element={<Starter />} />
 									<Route path="/Interview" element={<Interview />} />
 									<Route path="/Results" element={<Results />} />
+									<Route path="/About" element={<About />} />
 								</Routes>
 							</div>
 						</Router>

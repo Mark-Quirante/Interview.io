@@ -1,4 +1,13 @@
 import video from "./assets/Interview.io.png";
+import { Link } from "react-router-dom";
+
+function ButtonLink({ to, children }) {
+	return (
+		<Link to={to}>
+			<button>{children}</button>
+		</Link>
+	);
+}
 
 function Navbar() {
 	return (
@@ -10,7 +19,9 @@ function Navbar() {
 			></img>
 			<ul>
 				<li>Land that job!</li>
-				<li>About us</li>
+				<li>
+					<ButtonLink to="/About">About</ButtonLink>
+				</li>
 			</ul>
 		</nav>
 	);

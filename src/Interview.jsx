@@ -67,9 +67,9 @@ function Interview() {
 		jobDescription,
 		openai.chat.completions,
 		currentQuestionIndex,
+		setInterviewData,
 	]);
 
-	// Handler for storing the answer
 	const handleAnswer = (answer) => {
 		setInterviewData((prevData) => {
 			const updatedData = [...prevData];
@@ -81,7 +81,6 @@ function Interview() {
 		});
 	};
 
-	// Handler for moving to the next question
 	const nextQuestion = () => {
 		clearObjects();
 		if (currentQuestionIndex < 4) {

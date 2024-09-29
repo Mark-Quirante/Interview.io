@@ -1,4 +1,3 @@
-// InterviewAnswersContext.js
 import { createContext, useState } from "react";
 
 export const InterviewAnswersContext = createContext();
