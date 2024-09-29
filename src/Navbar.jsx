@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "./assets/logo.png";
-import "./styles/Navbar.css";
+import "./styles/NavBar.css";
 
 function ButtonLink({ to, children }) {
 	return (
