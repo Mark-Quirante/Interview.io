@@ -1,12 +1,12 @@
-function Button({ children, isDisabled = false, className }) {
+function Button({ children, isDisabled = false, onClick, icon, className }) {
   return (
-    <button className={
+    <button disabled={isDisabled} onClick={onClick} className={
       "px-5 py-2 flex justify-center items-center rounded " +
       (isDisabled ? "bg-gray text-dark-gray " : "bg-green text-white ") +
       className
     } 
       >
-      {children}
+      {icon && <img className="w-[15px] h-[15px] mr-2" src={icon} alt=""/>}{children}
     </button>
   );
 }

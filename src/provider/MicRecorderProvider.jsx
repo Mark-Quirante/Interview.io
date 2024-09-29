@@ -5,9 +5,11 @@ export const MicRecorderContext = createContext({
   isRecording: false,
   mediaURL: null,
   recordedBlob: null,
+  transcription: null,
   beginRecording: () => {},
   stopRecording: () => {},
   clearObjects: () => {},
+  setTranscription: () => {},
 });
 
 function MicRecorderProvider({ children }) {
@@ -17,6 +19,18 @@ function MicRecorderProvider({ children }) {
   const [mediaChunks, setMediaChunks] = useState([]);
   const [recordedBlob, setRecordedBlob] = useState(null);
   const [mediaURL, setMediaURL] = useState(null);
+  const [stream, setStream] = useState(null);
+  const [hasCleared, setHasCleared] = useState(false);
+  const [transcription, setTranscription] = useState("");
+
+  useEffect(() => {
+    if (isRecording && stream && hasCleared) {
+      const mediaRecorder = setupMediaRecorder(stream);
+      mediaRecorder.start();
+      setMediaRecorder(mediaRecorder);
+      setHasCleared(false);
+    }
+  }, [stream, isRecording, hasCleared]);
 
   useEffect(() => {
     if (mediaChunks.length && !isRecording) {
@@ -40,16 +54,14 @@ function MicRecorderProvider({ children }) {
   }
 
   const beginRecording = () => {
+    clearObjects();
+
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
         setHasMicAccess(true);
         setIsRecording(true);
-        clearObjects();
-
-        const mediaRecorder = setupMediaRecorder(stream);
-        mediaRecorder.start();
-        setMediaRecorder(mediaRecorder);
+        setStream(stream);
       })
       .catch(() => setHasMicAccess(false));
   };
@@ -59,10 +71,13 @@ function MicRecorderProvider({ children }) {
   };
 
   const clearObjects = () => {
+    setTranscription("");
     setMediaRecorder(null);
     setMediaChunks([]);
     setRecordedBlob(null);
     setMediaURL(null);
+    setStream(null);
+    setHasCleared(true);
   }
 
   return (
@@ -72,9 +87,11 @@ function MicRecorderProvider({ children }) {
         isRecording,
         mediaURL,
         recordedBlob,
+        transcription,
         beginRecording,
         stopRecording,
         clearObjects,
+        setTranscription,
       }}
     >
       {children}

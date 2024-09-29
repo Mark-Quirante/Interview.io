@@ -62,9 +62,9 @@ function Starter() {
 				<img className="relative lg:top-[50px] lg:scale-150 w-full max-w-[75%] lg:max-w-[500px] lg:flex-1" src={InterviewStart} alt="Job interview underway" />
 			</div>
 			<Card className="flex flex-col items-center relative mt-[-30px] z-[100] mb-5">
-				<h2 className="text-center mb-5">
+				<p className="text-center mb-5 text-xl font-bold">
 					Let me tell you a little bit about the company.
-				</h2>
+				</p>
 				<p className="text-green mb-5">{responseText ? responseText : "Loading company details..."}</p>
 			{responseText && <ButtonLink to="/Interview">Start answering<br/>Interview Questions</ButtonLink>}
 			</Card>

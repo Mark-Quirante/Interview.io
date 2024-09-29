@@ -1,14 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 import { OpenAIContext } from "./OpenAIContext";
 import { JobContext } from "./JobContext";
-import SpeechToText from "../src/components/SpeechToText";
 import { Link } from "react-router-dom";
-import { MicRecorderContext } from "./provider/MicRecorderProvider";
+import Card from "./components/Card";
+import Button from "./components/Button";
+import AnswerBox from "./components/AnswerBox";
 
 function ButtonLink({ to, children }) {
 	return (
-		<Link to={to}>
-			<button>{children}</button>
+		<Link className="mt-5" to={to}>
+			<button className="font-bold text-lg text-light-green">{children}</button>
 		</Link>
 	);
 }
@@ -16,9 +17,6 @@ function ButtonLink({ to, children }) {
 function Interview() {
 	const openai = useContext(OpenAIContext);
 	const { jobTitle, companyName, jobDescription } = useContext(JobContext);
-	const { clearObjects } = useContext(MicRecorderContext);
-
-	console.log(jobTitle);
 
 	const [questions, setQuestions] = useState([]);
 	const [interviewAnswers, setInterviewAnswers] = useState([]);
@@ -66,6 +64,8 @@ function Interview() {
 
 	// Handler for storing the answer
 	const handleAnswer = (answer) => {
+		console.log('Answer', answer)
+
 		setInterviewAnswers((prevAnswers) => {
 			const newAnswers = [...prevAnswers];
 			newAnswers[currentQuestionIndex] = answer;
@@ -75,35 +75,32 @@ function Interview() {
 
 	// Handler for moving to the next question
 	const nextQuestion = () => {
-		clearObjects();
 		if (currentQuestionIndex < 4) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		}
 	};
 
 	return (
-		<div>
-			<h1>Interview</h1>
+		<div className="flex flex-col flex-1 items-center">
 			{questions[currentQuestionIndex] && (
-				<div key={currentQuestionIndex} style={{ marginBottom: "20px" }}>
-					<h2>
-						Question {currentQuestionIndex + 1}:{" "}
-						{questions[currentQuestionIndex]}
-					</h2>
-					{interviewAnswers[currentQuestionIndex] ? (
-						<p>Your Answer: {interviewAnswers[currentQuestionIndex]}</p>
-					) : (
-						<SpeechToText
-							setAnswer={handleAnswer}
-							questionNumber={currentQuestionIndex + 1}
-						/>
-					)}
+				<div className="flex flex-col items-center flex-1" key={currentQuestionIndex}>
+					<div className="text-white text-center mb-5">
+						<h1>
+							Question {currentQuestionIndex + 1}
+						</h1>
+						<p>out of 5</p>
+					</div>
+					<Card className="flex flex-col items-center flex-1">
+						<p className="text-center font-bold text-xl">{questions[currentQuestionIndex]}</p>
+						<AnswerBox setAnswer={handleAnswer} answer={interviewAnswers[currentQuestionIndex]}/>
+						{currentQuestionIndex < 4 && questions.length > currentQuestionIndex && (
+							<Button className="w-full" onClick={nextQuestion}>Next Question</Button>
+						)}
+					</Card>
 				</div>
 			)}
-			{currentQuestionIndex < 4 && questions.length > currentQuestionIndex && (
-				<button onClick={nextQuestion}>Next Question</button>
-			)}
-			{currentQuestionIndex === 4 && (
+			
+			{/* {currentQuestionIndex === 4 && (
 				<div>
 					<h2>Summary of Answers:</h2>
 					{interviewAnswers.map((answer, index) => (
@@ -112,8 +109,8 @@ function Interview() {
 						</p>
 					))}
 				</div>
-			)}
-			<ButtonLink to="/Results">Results</ButtonLink>
+			)} */}
+			<ButtonLink to="/Results">End Interview</ButtonLink>
 		</div>
 	);
 }
