@@ -53,7 +53,13 @@ function Interview() {
 		if (currentQuestionIndex < 4) {
 			fetchOpenAIQuestion();
 		}
-	}, [jobTitle, currentQuestionIndex]);
+	}, [
+		jobTitle,
+		companyName,
+		jobDescription,
+		openai.chat.completions,
+		currentQuestionIndex,
+	]);
 
 	// Handler for storing the answer
 	const handleAnswer = (answer) => {
