@@ -30,7 +30,7 @@ function Job() {
 				<p className="text-center mb-8 lg:mb-16 lg:text-start">
 					Practice your responses, receive instant feedback, and refine your answers with a personalized mock interview.
 				</p>
-				<img className="lg:w-full lg:relative lg:left-[50px]" src={InterviewPrep} alt="Group prepping for interview"/>
+				<img className="w-full lg:relative lg:left-[50px]" src={InterviewPrep} alt="Group prepping for interview"/>
 			</div>
 			<Card className="w-full max-w-[500px] mt-[-20px] lg:mt-0 lg:flex-[2_2_0%] lg:z-[1]">
 				<div className="text-center mb-5">
