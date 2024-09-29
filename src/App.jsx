@@ -18,7 +18,7 @@ function App() {
 			<JobProvider>
 				<MicRecorderProvider>
 					<InterviewAnswersProvider>
-						<Router>
+						<Router basename="/Interview.io/">
 							<Navbar />
 							<div className="p-5 md:p-10 lg:p-8 max-w-[900px] flex flex-col flex-1">
 								<Routes>
