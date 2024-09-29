@@ -2,10 +2,22 @@ import { useContext, useState, useEffect } from "react";
 import { OpenAIContext } from "./OpenAIContext";
 import { JobContext } from "./JobContext";
 import SpeechToText from "../src/components/SpeechToText";
+import { Link } from "react-router-dom";
+import { MicRecorderContext } from "./provider/MicRecorderProvider";
+
+function ButtonLink({ to, children }) {
+	return (
+		<Link to={to}>
+			<button>{children}</button>
+		</Link>
+	);
+}
 
 function Interview() {
 	const openai = useContext(OpenAIContext);
 	const { jobTitle, companyName, jobDescription } = useContext(JobContext);
+	const { clearObjects } = useContext(MicRecorderContext);
+
 	console.log(jobTitle);
 
 	const [questions, setQuestions] = useState([]);
@@ -44,7 +56,13 @@ function Interview() {
 		if (currentQuestionIndex < 4) {
 			fetchOpenAIQuestion();
 		}
-	}, [jobTitle, currentQuestionIndex]);
+	}, [
+		jobTitle,
+		companyName,
+		jobDescription,
+		openai.chat.completions,
+		currentQuestionIndex,
+	]);
 
 	// Handler for storing the answer
 	const handleAnswer = (answer) => {
@@ -57,6 +75,7 @@ function Interview() {
 
 	// Handler for moving to the next question
 	const nextQuestion = () => {
+		clearObjects();
 		if (currentQuestionIndex < 4) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		}
@@ -94,6 +113,7 @@ function Interview() {
 					))}
 				</div>
 			)}
+			<ButtonLink to="/Results">Results</ButtonLink>
 		</div>
 	);
 }
